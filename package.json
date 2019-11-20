@@ -1,0 +1,15 @@
+{
+  "name": "typescript-complete-course-2020-edition",
+  "version": "1.0.0",
+  "description": "TypeScript by Academind - 2020 Edition",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server"
+  },
+  "keywords": [],
+  "author": "KibobiShtrudelz",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
