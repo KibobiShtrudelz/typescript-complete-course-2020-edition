@@ -10,6 +10,7 @@ if (typeof userInput === "string") {
 // -------------------------------------------------------------------------
 // never type
 function generateError(message, code) {
+    // this function never returns anything, even undefined!
     throw { message: message, errorCode: code };
 }
 generateError("An error occured!", 500);
