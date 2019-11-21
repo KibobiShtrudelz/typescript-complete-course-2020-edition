@@ -59,6 +59,9 @@
 // console.log(combinedNames);
 
 // Aliases -------------------------------------------------------------------------
+// type User = { name: string; age: number };
+// const u1: User = { name: "Peci", age: 30 };
+
 type Combinable = number | string;
 type ConversionDescriptor = "as-number" | "as-text";
 
