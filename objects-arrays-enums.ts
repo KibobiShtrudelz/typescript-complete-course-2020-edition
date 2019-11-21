@@ -7,7 +7,7 @@
 
 // console.log(person.name);
 
-// This is better to write
+// This is better to aproach
 const person = {
   name: "Peter",
   age: 30
