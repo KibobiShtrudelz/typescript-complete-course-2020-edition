@@ -1,7 +1,9 @@
+// tsc --target es6 app.ts --watch
+
 class Department {
   // private id: string;
   // private name: string;
-  private employees: string[] = [];
+  protected employees: string[] = [];
 
   constructor(private readonly id: string, public name: string) {
     // this.id = id;
@@ -39,12 +41,40 @@ it.printEmployeeInformation();
 console.log(it);
 
 class AccountingDepartment extends Department {
-  constructor(id: string, private reports: string[]) {
-    super(id, "Accounting");
+  private lastReport: string;
+
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+
+    throw new Error("No report found!");
   }
 
-  addReports(text: string) {
+  set mostRecentReport(value: string) {
+    if (!value) {
+      throw new Error("Please pass in a valid value!");
+    }
+
+    this.addReport(value);
+  }
+
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+    this.lastReport = reports[0];
+  }
+
+  addEmployee(name: string) {
+    if (name === "Peci") {
+      return;
+    }
+
+    this.employees.push(name);
+  }
+
+  addReport(text: string) {
     this.reports.push(text);
+    this.lastReport = text;
   }
 
   printReports() {
@@ -52,12 +82,14 @@ class AccountingDepartment extends Department {
   }
 }
 
-const accounting = new AccountingDepartment("d2", ["Minority Report"]);
+const accounting = new AccountingDepartment("d2", []);
 
+accounting.mostRecentReport = "W@z@@@@@"; // the "set" properties are called as properties, not function calls!
+accounting.addEmployee("Peci");
 accounting.addEmployee("IT Peci");
-accounting.addEmployee("IT Meci");
 
-accounting.addReports("Not so minority report");
+accounting.addReport("Minority Report");
+console.log(accounting.mostRecentReport); // the "get" properties are called as properties, not function calls!
 accounting.printReports();
 
 console.log(accounting);
