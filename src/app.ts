@@ -13,7 +13,7 @@ class Department {
   }
 
   addEmployee(employee: string) {
-    this.employees.push(employee)
+    this.employees.push(employee);
   }
 
   printEmployeeInformation() {
@@ -22,13 +22,45 @@ class Department {
   }
 }
 
-const accounting = new Department("d1", "Accounting");
+class ITDepartment extends Department {
+  constructor(id: string, public admins: string[]) {
+    super(id, "IT");
+  }
+}
 
-accounting.addEmployee("Peci");
-accounting.addEmployee("Meci");
+const it = new ITDepartment("d1", ["Peci"]);
 
-accounting.describe();
-accounting.printEmployeeInformation();
+it.addEmployee("Peci");
+it.addEmployee("Meci");
+
+it.describe();
+it.printEmployeeInformation();
+
+console.log(it);
+
+class AccountingDepartment extends Department {
+  constructor(id: string, private reports: string[]) {
+    super(id, "Accounting");
+  }
+
+  addReports(text: string) {
+    this.reports.push(text);
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accounting = new AccountingDepartment("d2", ["Minority Report"]);
+
+accounting.addEmployee("IT Peci");
+accounting.addEmployee("IT Meci");
+
+accounting.addReports("Not so minority report");
+accounting.printReports();
+
+console.log(accounting);
 
 // const accountingCopy = { name: "copied name", describe: accounting.describe };
 
