@@ -62,33 +62,33 @@
 // type User = { name: string; age: number };
 // const u1: User = { name: "Peci", age: 30 };
 
-type Combinable = number | string;
-type ConversionDescriptor = "as-number" | "as-text";
+// type Combinable = number | string;
+// type ConversionDescriptor = "as-number" | "as-text";
 
-function combine(
-  input_1: Combinable,
-  input_2: Combinable,
-  resultConversion: ConversionDescriptor // additional safety
-) {
-  let result;
+// function combine(
+//   input_1: Combinable,
+//   input_2: Combinable,
+//   resultConversion: ConversionDescriptor // additional safety
+// ) {
+//   let result;
 
-  if (
-    (typeof input_1 === "number" && typeof input_2 === "number") ||
-    resultConversion === "as-number"
-  ) {
-    result = +input_1 + +input_2;
-  } else {
-    result = input_1.toString() + input_2.toString();
-  }
+//   if (
+//     (typeof input_1 === "number" && typeof input_2 === "number") ||
+//     resultConversion === "as-number"
+//   ) {
+//     result = +input_1 + +input_2;
+//   } else {
+//     result = input_1.toString() + input_2.toString();
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
-const combinedAges = combine(30, 26, "as-number");
-console.log(combinedAges);
+// const combinedAges = combine(30, 26, "as-number");
+// console.log(combinedAges);
 
-const combinedStringAges = combine("30", "26", "as-number");
-console.log(combinedStringAges);
+// const combinedStringAges = combine("30", "26", "as-number");
+// console.log(combinedStringAges);
 
-const combinedNames = combine("Peci", "Meci", "as-text");
-console.log(combinedNames);
+// const combinedNames = combine("Peci", "Meci", "as-text");
+// console.log(combinedNames);

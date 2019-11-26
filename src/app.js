@@ -1,22 +1,26 @@
-let add;
-add = (n_1, n_2) => n_1 + n_2;
-class Person {
-    constructor(n) {
-        this.age = 30;
-        if (n) {
-            this.name = n;
-        }
+// Intersection Types - they allow us to combine other types. They are very close to Interface inheritanse.
+// intersection operator is "&", example: type ElevatedEmployee = Admin & Employee;
+// Type Guards - they helps us with union types
+const e1 = {
+    name: "Pepo",
+    privileges: ["create-server"],
+    startDate: new Date()
+};
+function add(a, b) {
+    // this is kind of type guard that use typeof
+    if (typeof a === "string" || typeof b === "string") {
+        return a.toString() + b.toString();
     }
-    greet(phrase) {
-        if (this.name) {
-            console.log(phrase + " " + this.name);
-        }
-        else {
-            console.log("Hi!");
-        }
+    return a + b;
+}
+function printEmployeeInfo(employee) {
+    console.log("Name:", employee.name);
+    if ("privileges" in employee) {
+        console.log("Privileges:", employee.privileges);
+    }
+    if ("startDate" in employee) {
+        console.log("Start Date:", employee.startDate);
     }
 }
-let user_1;
-user_1 = new Person();
-user_1.greet("Wazaaaaa - I am");
-console.log("user_1", user_1);
+// printEmployeeInfo(e1);
+printEmployeeInfo({ name: "Manu", startDate: new Date() });

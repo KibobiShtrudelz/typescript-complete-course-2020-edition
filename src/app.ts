@@ -1,45 +1,53 @@
-// In a few words an Interface describes the structure of an object
-// Interfaces are purely development TS features helping write better code.
-// They do not compile to JS.
-interface AddFn {
-  (a: number, b: number): number;
-}
+// Intersection Types - they allow us to combine other types. They are very close to Interface inheritanse.
+// intersection operator is "&", example: type ElevatedEmployee = Admin & Employee;
+// Type Guards - they helps us with union types
 
-let add: AddFn;
+type Admin = {
+  name: string;
+  privileges: string[];
+};
 
-add = (n_1: number, n_2: number) => n_1 + n_2;
+type Employee = {
+  name: string;
+  startDate: Date;
+};
 
-interface Named {
-  readonly name?: string;
-  outputName?: string; // methods also can be optional - myMethod?() {...}
-}
+type ElevatedEmployee = Admin & Employee; // Now ElevatedEmployee has both types
 
-interface Greetable extends Named {
-  greet(phrase: string): void;
-}
+const e1: ElevatedEmployee = {
+  name: "Pepo",
+  privileges: ["create-server"],
+  startDate: new Date()
+};
 
-class Person implements Greetable {
-  name?: string;
-  age = 30;
+type Combinable = string | number;
 
-  constructor(n?: string) {
-    if (n) {
-      this.name = n;
-    }
+type Numeric = number | boolean;
+
+type Universal = Combinable & Numeric;
+
+function add(a: Combinable, b: Combinable) {
+  // this is kind of type guard that use typeof
+  if (typeof a === "string" || typeof b === "string") {
+    return a.toString() + b.toString();
   }
 
-  greet(phrase: string) {
-    if (this.name) {
-      console.log(phrase + " " + this.name);
-    } else {
-      console.log("Hi!");
-    }
+  return a + b;
+}
+
+type UnknownEmployee = Employee | Admin;
+
+function printEmployeeInfo(employee: UnknownEmployee) {
+  console.log("Name:", employee.name);
+
+  if ("privileges" in employee) {
+    console.log("Privileges:", employee.privileges);
+  }
+
+  if ("startDate" in employee) {
+    console.log("Start Date:", employee.startDate);
   }
 }
 
-let user_1: Greetable;
-
-user_1 = new Person();
-
-user_1.greet("Wazaaaaa - I am");
-console.log("user_1", user_1);
+// printEmployeeInfo(e1);
+printEmployeeInfo({ name: "Manu", startDate: new Date() });
