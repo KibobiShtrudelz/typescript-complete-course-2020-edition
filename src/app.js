@@ -9,8 +9,8 @@ class Department {
         // this.id = id;
         // this.name = n;
     }
-    describe() {
-        console.log(`Department (${this.id}): ${this.name}`);
+    static createEmployee(name) {
+        return { name };
     }
     addEmployee(employee) {
         this.employees.push(employee);
@@ -20,12 +20,18 @@ class Department {
         console.log(this.employees);
     }
 }
+Department.fiscalYear = 2020;
 class ITDepartment extends Department {
     constructor(id, admins) {
         super(id, "IT");
         this.admins = admins;
     }
+    describe() {
+        console.log("IT Department - ID:", this.id);
+    }
 }
+const employee_1 = Department.createEmployee("Peckata");
+console.log(employee_1, Department.fiscalYear);
 const it = new ITDepartment("d1", ["Peci"]);
 it.addEmployee("Peci");
 it.addEmployee("Meci");
@@ -49,6 +55,9 @@ class AccountingDepartment extends Department {
             throw new Error("Please pass in a valid value!");
         }
         this.addReport(value);
+    }
+    describe() {
+        console.log("Accounting Department - ID: ", this.id);
     }
     addEmployee(name) {
         if (name === "Peci") {
