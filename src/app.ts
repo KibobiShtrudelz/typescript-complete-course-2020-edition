@@ -37,21 +37,9 @@ class ITDepartment extends Department {
   }
 }
 
-const employee_1 = Department.createEmployee("Peckata");
-console.log(employee_1, Department.fiscalYear);
-
-const it = new ITDepartment("d1", ["Peci"]);
-
-it.addEmployee("Peci");
-it.addEmployee("Meci");
-
-it.describe();
-it.printEmployeeInformation();
-
-console.log(it);
-
 class AccountingDepartment extends Department {
   private lastReport: string;
+  private static instance: AccountingDepartment;
 
   get mostRecentReport() {
     if (this.lastReport) {
@@ -69,9 +57,20 @@ class AccountingDepartment extends Department {
     this.addReport(value);
   }
 
-  constructor(id: string, private reports: string[]) {
+  private constructor(id: string, private reports: string[]) {
     super(id, "Accounting");
     this.lastReport = reports[0];
+  }
+
+  static getInstance() {
+    if (AccountingDepartment.instance) {
+      // Here "AccountingDepartment.instance" and "this.instance" are the same
+      return AccountingDepartment.instance;
+      // returning the instance we already hav, if not - down below return a created new one
+    }
+
+    this.instance = new AccountingDepartment("d2", []);
+    return this.instance;
   }
 
   describe() {
@@ -96,18 +95,25 @@ class AccountingDepartment extends Department {
   }
 }
 
-const accounting = new AccountingDepartment("d2", []);
+const employee_1 = Department.createEmployee("Peckata");
+console.log(employee_1, Department.fiscalYear);
+
+const it = new ITDepartment("d1", ["Peci"]);
+it.addEmployee("Peci");
+it.addEmployee("Meci");
+it.describe();
+it.printEmployeeInformation();
+console.log(it);
+
+// const accounting = new AccountingDepartment("d2", []);
+const accounting = AccountingDepartment.getInstance();
+console.log(accounting);
+const accounting2 = AccountingDepartment.getInstance(); // same as accounting because no new instance is created
+console.log(accounting2);
 
 accounting.mostRecentReport = "W@z@@@@@"; // the "set" properties are called as properties, not function calls!
 accounting.addEmployee("Peci");
 accounting.addEmployee("IT Peci");
-
 accounting.addReport("Minority Report");
 console.log(accounting.mostRecentReport); // the "get" properties are called as properties, not function calls!
 accounting.printReports();
-
-console.log(accounting);
-
-// const accountingCopy = { name: "copied name", describe: accounting.describe };
-
-// accountingCopy.describe();
