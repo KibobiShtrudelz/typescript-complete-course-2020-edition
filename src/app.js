@@ -1,6 +1,4 @@
-// Intersection Types - they allow us to combine other types. They are very close to Interface inheritanse.
-// intersection operator is "&", example: type ElevatedEmployee = Admin & Employee;
-// Type Guards - they helps us with union types
+// tsc --target es6 app.ts --watch
 const e1 = {
     name: "Pepo",
     privileges: ["create-server"],
@@ -24,3 +22,26 @@ function printEmployeeInfo(employee) {
 }
 // printEmployeeInfo(e1);
 printEmployeeInfo({ name: "Manu", startDate: new Date() });
+class Car {
+    drive() {
+        console.log("Driving...");
+    }
+}
+class Truck {
+    drive() {
+        console.log("Driving a truck...");
+    }
+    loadCargo(amount) {
+        console.log("Loading cargo...", amount);
+    }
+}
+const v1 = new Car();
+const v2 = new Truck();
+function useVehicle(vehicle) {
+    vehicle.drive();
+    if ("loadCargo" in vehicle || vehicle instanceof Truck) {
+        vehicle.loadCargo(1000);
+    }
+}
+useVehicle(v1);
+useVehicle(v2);
