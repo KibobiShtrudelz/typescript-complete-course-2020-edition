@@ -1,31 +1,7 @@
 // tsc --target es6 app.ts --watch
 
-// const names: Array<string> = ["Peco", "Kleco"]; // string[]
-// names[0].split(" ");
-
-// const promise: Promise<string | number> = new Promise((res, rej) => {
-//   setTimeout(() => {
-//     res("This is done!");
-//   }, 2000);
-// });
-
-// promise.then(data => {
-//   if (typeof data === "string") {
-//     console.log(data.split(" "));
-//   } else {
-//     console.log(data)
-//   }
-// });
-
-// Custom Generic Types
-
-// this way we can notate to specific prop in the objects because
-// we declare in <> that this two objects are intercepting and 
-// therefor TS knows what props are going to be included. This way
-// describe to TS what types we are going to use
-function merge<T, U>(objA: T, objB: U) {
-  return { ...objA, ...objB };
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return "Value: " + obj[key];
 }
 
-const mergeObj = merge({ name: "Pecimir" }, { age: 30 });
-mergeObj.name
+console.log(JSON.stringify(extractAndConvert({ name: "Kleshu" }, "name"), null, 2));

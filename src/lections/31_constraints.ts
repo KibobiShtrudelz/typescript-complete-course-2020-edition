@@ -1,3 +1,5 @@
+// tsc --target es6 app.ts --watch
+
 // const names: Array<string> = ["Peco", "Kleco"]; // string[]
 // names[0].split(" ");
 
@@ -21,9 +23,11 @@
 // we declare in <> that this two objects are intercepting and
 // therefor TS knows what props are going to be included. This way
 // describe to TS what types we are going to use
-// function merge<T, U>(objA: T, objB: U) {
+// function merge<T extends object, U extends object>(objA: T, objB: U) {
+//   // "extends object" declares that T MUST be of type object
 //   return { ...objA, ...objB };
 // }
 
-// const mergeObj = merge({ name: "Pecimir" }, { age: 30 });
+// const mergeObj = merge({ name: "Pecimir", hobbies: ["Sports"] }, { age: 30 });
+// console.log(JSON.stringify(mergeObj, null, 2));
 // mergeObj.name;
