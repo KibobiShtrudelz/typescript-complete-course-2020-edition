@@ -4,27 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>TS</title>
+    <title>ProjectManager</title>
+    <link rel="stylesheet" href="src/app.css" />
     <script src="src/app.js" defer></script>
 
-    <style>
+    <!-- <style>
       body {
         color: gold;
         background-color: #303030;
       }
-    </style>
+    </style> -->
   </head>
   <body>
-    <h2 id="title-output">Understanding TypeScript - 2020 Edition</h2>
-    <hr />
-    <input type="text" name="user-input" id="user-input" />
-    <button>Click me</button>
+    <!-- <h2 id="title-output">Understanding TypeScript - 2020 Edition</h2> -->
+    <!-- <hr /> -->
+    <!-- <input type="text" name="user-input" id="user-input" /> -->
+    <!-- <button>Click me</button> -->
+    <!-- <div id="app"></div> -->
+    <!-- <hr /> -->
+    <!-- <form> -->
+    <!-- <input type="text" name="title" id="title" placeholder="Course title" /> -->
+    <!-- <input type="text" name="price" id="price" placeholder="Course price" /> -->
+    <!-- <button type="submit">Save</button> -->
+    <!-- </form> -->
+
+    <template id="project-input">
+      <form>
+        <div class="form-control">
+          <label for="title">Title</label>
+          <input type="text" id="title" />
+        </div>
+        <div class="form-control">
+          <label for="description">Description</label>
+          <textarea id="description" rows="3"></textarea>
+        </div>
+        <div class="form-control">
+          <label for="people">People</label>
+          <input type="number" id="people" step="1" min="0" max="10" />
+        </div>
+        <button type="submit">ADD PROJECT</button>
+      </form>
+    </template>
+    <template id="single-project">
+      <li></li>
+    </template>
+    <template id="project-list">
+      <section class="projects">
+        <header>
+          <h2></h2>
+        </header>
+        <ul></ul>
+      </section>
+    </template>
     <div id="app"></div>
-    <hr />
-    <form>
-      <input type="text" name="title" id="title" placeholder="Course title" />
-      <input type="text" name="price" id="price" placeholder="Course price" />
-      <button type="submit">Save</button>
-    </form>
   </body>
 </html>

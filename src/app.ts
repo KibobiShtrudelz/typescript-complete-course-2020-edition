@@ -1,85 +1,57 @@
 // tsc --target es6 app.ts --watch
 
-interface ValidatorConfig {
-  [property: string]: {
-    [validatableProp: string]: string[]; // ["required", "positive" ...]
-  };
-}
-
-const registeredValidators: ValidatorConfig = {};
-
-function Required(target: any, propName: string) {
-  registeredValidators[target.constructor.name] = {
-    ...registeredValidators[target.constructor.name],
-    [propName]: ["required"]
-  };
-}
-
-function PositiveNumber(target: any, propName: string) {
-  registeredValidators[target.constructor.name] = {
-    ...registeredValidators[target.constructor.name],
-    [propName]: ["positive"]
-  };
-}
-
-function validate(obj: any) {
-  const objValidatorConfig = registeredValidators[obj.constructor.name];
-
-  if (!objValidatorConfig) {
-    return true;
-  }
-
-  let isValid = true;
-  for (const prop in objValidatorConfig) {
-    console.log("prop", prop);
-    for (const validator of objValidatorConfig[prop]) {
-      switch (validator) {
-        case "required":
-          isValid = isValid && !!obj[prop];
-          break;
-
-        case "positive":
-          isValid = isValid && obj[prop] > 0;
-          break;
-
-        default:
-          break;
-      }
+// autobind decorator
+function Autobind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjustedDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this);
+      return boundFunction;
     }
-  }
+  };
 
-  return isValid;
+  return adjustedDescriptor;
 }
 
-class Course {
-  @Required
-  title: string;
-  @PositiveNumber
-  price: number;
+class ProjectInput {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLFormElement;
+  titleInputElement: HTMLInputElement;
+  descriptionInputElement: HTMLInputElement;
+  peopleInputElement: HTMLInputElement;
 
-  constructor(t: string, p: number) {
-    this.title = t;
-    this.price = p;
+  constructor() {
+    this.templateElement = document.getElementById("project-input")! as HTMLTemplateElement;
+    this.hostElement = document.getElementById("app")! as HTMLDivElement;
+
+    const importedNode = document.importNode(this.templateElement.content, true);
+    this.element = importedNode.firstElementChild as HTMLFormElement;
+    this.element.id = "user-input";
+
+    this.titleInputElement = this.element.querySelector("#title")! as HTMLInputElement;
+    this.descriptionInputElement = this.element.querySelector("#description")! as HTMLInputElement;
+    this.peopleInputElement = this.element.querySelector("#people")! as HTMLInputElement;
+
+    this.configure();
+    this.attach();
+  }
+
+  @Autobind
+  private submitHandler(event: Event) {
+    event.preventDefault();
+    console.log(this.titleInputElement.value);
+  }
+
+  private configure() {
+    this.element.addEventListener("submit", this.submitHandler);
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement("afterbegin", this.element);
   }
 }
 
-const courseForm = document.querySelector("form")!;
-
-courseForm.addEventListener("submit", event => {
-  event.preventDefault();
-
-  const titleElement = document.getElementById("title") as HTMLInputElement;
-  const priceElement = document.getElementById("price") as HTMLInputElement;
-
-  const title = titleElement.value;
-  const price = +priceElement.value;
-
-  const createdCourse = new Course(title, price);
-
-  if (!validate(createdCourse)) {
-    alert("Invaliden kaput, pliiz trai agen leitar!");
-    return;
-  }
-
-  console.log("createdCourse", createdCourse);
-});
+const prjInput = new ProjectInput();
