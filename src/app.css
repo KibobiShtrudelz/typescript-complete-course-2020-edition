@@ -51,8 +51,8 @@ button:focus {
 
 button:hover,
 button:active {
-  background: #a80041;
-  border-color: #a80041;
+  background: green;
+  border-color: green;
 }
 
 .projects {
@@ -61,7 +61,7 @@ button:active {
 }
 
 .projects header {
-  background: #ff0062;
+  background: green;
   height: 3.5rem;
   display: flex;
   justify-content: center;
