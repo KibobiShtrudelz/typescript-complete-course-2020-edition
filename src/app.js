@@ -6,12 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 function validate(validatableInput) {
-    console.log("validatableInput", validatableInput);
     let isValid = true;
     if (validatableInput.required) {
         isValid = isValid && validatableInput.value.toString().trim().length !== 0;
     }
-    // using "!= null" means if it's not null or undefined
     if (validatableInput.minLength != null && typeof validatableInput.value === "string") {
         isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
     }
@@ -27,18 +25,18 @@ function validate(validatableInput) {
     return isValid;
 }
 // autobind decorator
-function Autobind(_target, _methodName, descriptor) {
+function autobind(_, _2, descriptor) {
     const originalMethod = descriptor.value;
-    const adjustedDescriptor = {
+    const adjDescriptor = {
         configurable: true,
-        enumerable: false,
         get() {
-            const boundFunction = originalMethod.bind(this);
-            return boundFunction;
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
         }
     };
-    return adjustedDescriptor;
+    return adjDescriptor;
 }
+// ProjectList Class
 class ProjectList {
     constructor(type) {
         this.type = type;
@@ -46,18 +44,20 @@ class ProjectList {
         this.hostElement = document.getElementById("app");
         const importedNode = document.importNode(this.templateElement.content, true);
         this.element = importedNode.firstElementChild;
-        this.element.id = `${type}-projects`;
+        this.element.id = `${this.type}-projects`;
         this.attach();
+        this.renderContent();
     }
     renderContent() {
-        const listId = `${this.type}-prokect-list`;
+        const listId = `${this.type}-projects-list`;
         this.element.querySelector("ul").id = listId;
-        this.element.querySelector("h2").textContent = this.type.toUpperCase() + "PROJECTS";
+        this.element.querySelector("h2").textContent = this.type.toUpperCase() + " PROJECTS";
     }
     attach() {
         this.hostElement.insertAdjacentElement("beforeend", this.element);
     }
 }
+// ProjectInput Class
 class ProjectInput {
     constructor() {
         this.templateElement = document.getElementById("project-input");
@@ -93,7 +93,7 @@ class ProjectInput {
         if (!validate(titleValidatable) ||
             !validate(descriptionValidatable) ||
             !validate(peopleValidatable)) {
-            alert("Invalidiziran kaput, pliiz trai agen!");
+            alert("Invalid input, please try again!");
             return;
         }
         else {
@@ -109,8 +109,8 @@ class ProjectInput {
         event.preventDefault();
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
-            const [title, description, people] = userInput;
-            console.log(title, description, people);
+            const [title, desc, people] = userInput;
+            console.log(title, desc, people);
             this.clearInputs();
         }
     }
@@ -122,8 +122,8 @@ class ProjectInput {
     }
 }
 __decorate([
-    Autobind
+    autobind
 ], ProjectInput.prototype, "submitHandler", null);
 const prjInput = new ProjectInput();
-const activePrjList = new ProjectList();
-const finishedPrjList = new ProjectList();
+const activePrjList = new ProjectList("active");
+const finishedPrjList = new ProjectList("finished");
