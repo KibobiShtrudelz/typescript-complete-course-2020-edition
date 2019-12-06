@@ -119,7 +119,8 @@ class ProjectItem extends Component {
         }
     }
     dragStartHandler(event) {
-        console.log(event);
+        event.dataTransfer.setData("text/plain", this.project.id);
+        event.dataTransfer.effectAllowed = "move";
     }
     dragEndHandler(_event) {
         console.log("DragEnd");
@@ -146,11 +147,16 @@ class ProjectList extends Component {
         this.configure();
         this.renderContent();
     }
-    DragOverHandler(_event) {
-        const listEl = this.element.querySelector("ul");
-        listEl.classList.add("droppable");
+    DragOverHandler(event) {
+        if (event.dataTransfer && event.dataTransfer.types[0] === "text/plain") {
+            event.preventDefault(); // this is a must here, otherwise it won't work. This allows the drop event to trigger
+            const listEl = this.element.querySelector("ul");
+            listEl.classList.add("droppable");
+        }
     }
-    dropHandler(_event) { }
+    dropHandler(event) {
+        console.log("prj id " + event.dataTransfer.getData("text/plain"));
+    }
     dragLeaveHandler(_event) {
         const listEl = this.element.querySelector("ul");
         listEl.classList.remove("droppable");
@@ -173,7 +179,8 @@ class ProjectList extends Component {
     renderContent() {
         const listId = `${this.type}-projects-list`;
         this.element.querySelector("ul").id = listId;
-        this.element.querySelector("h2").textContent = this.type.toUpperCase() + " PROJECTS";
+        this.element.querySelector("h2").textContent =
+            this.type.toUpperCase() + " PROJECTS";
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);
