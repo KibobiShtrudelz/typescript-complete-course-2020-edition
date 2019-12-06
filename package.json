@@ -1,13 +1,17 @@
 {
-  "name": "typescript-complete-course-2020-edition",
+  "name": "understanding-typescript",
   "version": "1.0.0",
-  "description": "TypeScript by Academind - 2020 Edition",
-  "main": "index.js",
+  "description": "Understanding TypeScript Course Setup",
+  "main": "app.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server"
   },
-  "keywords": [],
-  "author": "KibobiShtrudelz",
+  "keywords": [
+    "typescript",
+    "course"
+  ],
+  "author": "Maximilian Schwarzmüller",
   "license": "ISC",
   "devDependencies": {
     "lite-server": "^2.5.4"
